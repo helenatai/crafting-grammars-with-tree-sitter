@@ -1,0 +1,5 @@
+System.print("Hello, world!")
+
+// a comment
+
+var number = 3
