@@ -1,5 +1,3 @@
-System.print("Hello, world!")
-
-// a comment
-
-var number = 3
+[1,]
+[1]
+[1, true, "str"]

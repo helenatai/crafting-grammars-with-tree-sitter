@@ -1,0 +1,18 @@
+==========
+List Value
+==========
+
+[]
+[1]
+[1, true, "str"]
+
+---
+
+(source_file 
+  (list)
+  (list 
+    (num))
+  (list 
+    (num)
+    (bool)
+    (string)))

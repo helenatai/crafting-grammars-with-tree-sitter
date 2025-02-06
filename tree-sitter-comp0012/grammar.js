@@ -38,6 +38,17 @@ module.exports = grammar({
 			choice(
 				$._value,
 				$.identifier,
+				$.list
+			),
+
+		list : ($) =>
+			seq(
+				"[",
+				choice(
+					optional(choice($._value, $.identifier)),
+					seq(choice($._value, $.identifier), repeat(seq(",", choice($._value, $.identifier))))
+				),
+				"]"
 			),
 
 		assignment: ($) =>
