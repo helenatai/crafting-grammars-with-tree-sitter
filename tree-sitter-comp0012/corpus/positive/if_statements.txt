@@ -3,21 +3,21 @@ Simple Conditions
 =================
 
 if (10 > 5) { 
-    System.print("correct");
+  System.print("Correct");
 }
 
 if ("hello" == "hello") { 
-    System.print("same words");
+  System.print("Same words");
 }
 
 if ([1, 2, 3] != [4, 5, 6]) { 
-    System.print("different lists");
+  System.print("Different lists");
 }
 
 if (false) {
-    System.print("never executes");
+  System.print("Never executes");
 } else{
-    System.print("this runs instead");
+  System.print("This runs instead");
 }
 
 ---
@@ -84,4 +84,192 @@ if (false) {
         (argument_list 
           (string))))))
 
+====================
+Variable Comparisons
+====================
 
+var x = 10;
+var y = 5;
+var z = "hello";
+var flag = false;
+
+if (x > y) {
+  System.print("x is greater than y");
+}
+
+if (z == "hello"){
+  System.print("String matches");
+}
+
+if (flag == false){
+  System.print("Boolean negation works");
+}
+
+---
+
+(source_file 
+  (assignment 
+    name: (identifier)
+    value: (num))
+  (assignment
+    name: (identifier)
+    value: (num))
+  (assignment
+    name: (identifier)
+    value: (string))
+  (assignment
+    name: (identifier)
+    value: (bool))
+
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (identifier)))
+    consequence: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string)))))
+
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (string)))
+    consequence: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string)))))
+
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (bool)))
+    consequence: (block 
+      (method_call 
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list 
+          (string))))))
+
+==============
+Nested If-Else
+==============
+
+var age = 25;
+if (age > 18) {
+    System.print("User is an adult");
+    if (age > 65) {
+        System.print("User is a senior citizen");
+    }
+} else {
+    System.print("User is a minor");
+}
+
+---
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (num))
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (num)))
+    consequence: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string)))
+      (if_statement
+        condition: (condition
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (num)))
+        consequence: (block
+          (method_call
+            receiver: (identifier)
+            name: (identifier)
+            (argument_list
+              (string))))))
+    alternative: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string))))))
+
+==================
+If-Else with Lists
+==================
+
+var list = [1, 2, 3];
+
+if (list != [4, 5, 6]) {
+    System.print("Lists are different");
+}
+
+---
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (list
+      (num)
+      (num)
+      (num)))
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (list
+          (num)
+          (num)
+          (num))))
+    consequence: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string))))))
+
+==========
+Edge Cases
+==========
+
+if (true) { }  
+if (x > 0) { System.print("valid"); } else { }
+
+---
+
+(source_file
+  (if_statement
+    condition: (condition
+      (bool))
+    consequence: (block))
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (num)))
+    consequence: (block
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string))))
+    alternative: (block)))

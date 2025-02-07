@@ -57,6 +57,10 @@
             "named": true
           },
           {
+            "type": "list",
+            "named": true
+          },
+          {
             "type": "num",
             "named": true
           },
@@ -253,6 +257,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "list",
           "named": true
         },
         {

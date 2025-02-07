@@ -1,1 +1,5 @@
-/Wren Language*/
+if (10 + 5) { 
+    System.print("Condition should be a boolean or comparison");
+}
+
+

@@ -19,11 +19,12 @@ module.exports = grammar({
 			),
 
 		_value: ($) =>
-			choice(
+			prec(2, choice(
 				$.bool,
 				$.num,
 				$.string,
-			),
+				$.list
+			)),
 
 		argument_list: ($) => seq("(", repeat($._expression), ")"),
 		method_call: ($) =>

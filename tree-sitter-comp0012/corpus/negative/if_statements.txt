@@ -1,0 +1,24 @@
+====================
+Invalid Conditionals 
+====================
+
+if (10 + 5) { 
+    System.print("Condition should be a boolean or comparison");
+}
+
+
+---
+
+(source_file 
+  (if_statement 
+    condition: (condition 
+      (num)
+      (ERROR
+        (UNEXPECTED '+')
+        (num)))
+    consequence: (block 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string))))))
