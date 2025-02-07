@@ -7,7 +7,6 @@ List Value
 ---
 
 
-(source_file 
-  (list 
-    (num)
-    (ERROR)))
+(source_file
+  (ERROR
+    (num)))

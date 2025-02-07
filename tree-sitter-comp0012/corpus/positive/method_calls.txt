@@ -2,8 +2,8 @@
 Empty method call
 =================
 
-System.print()
-list.insert()
+System.print();
+list.insert();
 
 ---
 
@@ -15,7 +15,7 @@ list.insert()
 Single Parameter Method Call
 ============================
 
-System.print("Hello!")
+System.print("Hello!");
 
 ---
 

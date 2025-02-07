@@ -8,6 +8,6 @@ Numbers (nums)
 ---
 
 (source_file
-      (num)
-      (ERROR
-        (num)))
+  (ERROR
+    (num)
+    (num)))

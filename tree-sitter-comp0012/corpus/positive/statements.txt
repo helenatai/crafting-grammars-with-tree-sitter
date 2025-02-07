@@ -2,10 +2,10 @@
 Numbers (nums)
 ==============
 
-0
-123
-12345678901
-034
+0;
+123;
+12345678901;
+034;
 
 ---
 
@@ -19,9 +19,9 @@ Numbers (nums)
 Strings
 =======
 
-"hello"
-"goodbye"
-"simple"
+"hello";
+"goodbye";
+"simple";
 
 ---
 
@@ -34,8 +34,8 @@ Strings
 Booleans (bool)
 ===============
 
-true
-false
+true;
+false;
 
 ---
 
@@ -47,11 +47,11 @@ false
 Assignments
 ===========
 
-var color = "yellow"
-var is_valid = true
-var dozen = 12
-var zero = 0
-var negate = false
+var color = "yellow";
+var is_valid = true;
+var dozen = 12;
+var zero = 0;
+var negate = false;
 
 ---
 

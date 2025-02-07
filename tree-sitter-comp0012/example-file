@@ -1,15 +1,1 @@
-var x = 10
-var y = "Monday"
-var z = true
-
-if (x > 5) {
-    System.print("x is larger than 5")
-}
-
-if (y == "monday") {
-    System.print("y is Monday")
-}
-
-if (z != false) {
-    System.print("z is true")
-}
+/Wren Language*/

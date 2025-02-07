@@ -21,12 +21,11 @@ Block comments Open
 
 ---
 (source_file
-   (ERROR
-      (UNEXPECTED 'W'))
-   (identifier)
-   (identifier)
-   (ERROR
-      (UNEXPECTED '*')))
+  (ERROR 
+    (UNEXPECTED 'W')
+    (identifier)
+    (identifier)
+    (UNEXPECTED '*')))
 
 ====================
 Block comments Close

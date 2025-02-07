@@ -7,11 +7,9 @@ System.print(
 ---
 
 (source_file
-    (method_call
-        (identifier)
-        (identifier)
-        (argument_list
-            (MISSING ")"))))
+  (ERROR
+    (identifier)
+    (identifier)))
 
 ==========================
 No-parenthesis method call
@@ -21,8 +19,8 @@ System.print "Hello!"
 
 ---
 
-(source_file
+(source_file 
+  (ERROR 
     (identifier)
-    (ERROR
-        (identifier))
-    (string))
+    (identifier)
+    (string)))

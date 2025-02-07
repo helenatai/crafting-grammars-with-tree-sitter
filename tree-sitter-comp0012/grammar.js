@@ -84,11 +84,11 @@ module.exports = grammar({
 
 		_statement: ($) =>
 			choice(
-				$._expression,
-				$.block,
-				$.assignment,
-				$.method_call,
-				$.if_statement,
+				seq($._expression,";"),
+				seq($.block),
+				seq($.assignment,";"),
+				seq($.method_call,";"),
+				seq($.if_statement),
 			),
 
 		_newline: (_$) => /\s*\n/,
