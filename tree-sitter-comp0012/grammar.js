@@ -38,10 +38,11 @@ module.exports = grammar({
 			choice(
 				$._value,
 				$.identifier,
-				$.list
+				$.list,
+				$.comparison_expression
 			),
 
-		list : ($) =>
+		list: ($) =>
 			seq(
 				"[",
 				choice(
@@ -50,6 +51,33 @@ module.exports = grammar({
 				),
 				"]"
 			),
+		
+		if_statement: ($) =>
+			seq(
+				"if",
+				field("condition", $.condition),
+				field("consequence", $.block),
+				optional(seq("else", field("alternative", $.block)))
+			),
+		
+		condition: ($) => 
+			seq(
+				"(",
+				$._expression,
+				")"
+			),
+		
+		comparison_expression: ($) =>
+			prec.left(1,
+				seq(
+					$._expression,
+					$.comparison_operator,
+					$._expression
+				)	
+			),
+
+		comparison_operator: ($) =>
+			choice("==", "!=", "<", ">", "<=", ">="),
 
 		assignment: ($) =>
 			seq("var", field("name", $.identifier), "=", field("value", $._value)),
@@ -60,6 +88,7 @@ module.exports = grammar({
 				$.block,
 				$.assignment,
 				$.method_call,
+				$.if_statement,
 			),
 
 		_newline: (_$) => /\s*\n/,
