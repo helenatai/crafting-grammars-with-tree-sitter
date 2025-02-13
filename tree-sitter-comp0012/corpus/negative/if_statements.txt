@@ -6,19 +6,84 @@ if (10 + 5) {
     System.print("Condition should be a boolean or comparison");
 }
 
+if (10 = 5) { 
+    System.print("Assignment instead of comparison");
+}
+
+if ("hello" !== "world") { 
+    System.print("Invalid operator");
+}
 
 ---
 
-(source_file 
-  (if_statement 
+(source_file
+  (ERROR
+    (num)
+    (num))
+  (block
+    (method_call
+      receiver: (identifier)
+      name: (identifier)
+      (argument_list
+        (string))))
+  (ERROR
+    (num)
+    (num))
+  (block
+    (method_call
+      receiver: (identifier)
+      name: (identifier)
+      (argument_list
+        (string))))
+  (if_statement
     condition: (condition 
-      (num)
-      (ERROR
-        (UNEXPECTED '+')
-        (num)))
-    consequence: (block 
-      (method_call
+      (comparison_expression
+        (string)
+        (comparison_operator)
+        (ERROR)
+        (string)))
+    consequence: (block
+      (method_call 
         receiver: (identifier)
         name: (identifier)
         (argument_list
           (string))))))
+
+===================
+Invalid Else Syntax
+===================
+
+else {
+    System.print("Else without if");
+}
+
+if (false) {
+    System.print("Correct if");
+} else System.print("Invalid else statement");
+
+---
+
+(source_file 
+  (ERROR
+    (identifier))
+  (block 
+    (method_call 
+      receiver: (identifier)
+      name: (identifier)
+      (argument_list
+        (string))))
+  (if_statement 
+    condition: (condition
+      (bool))
+    consequence: (block 
+      (method_call 
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
+          (string)))))
+  (ERROR)
+  (method_call 
+    receiver: (identifier)
+    name: (identifier)
+    (argument_list 
+      (string))))

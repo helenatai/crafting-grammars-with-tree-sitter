@@ -52,12 +52,12 @@ if (false) {
   (if_statement 
     condition: (condition 
       (comparison_expression 
-        (list 
+        (array 
           (num) 
           (num) 
           (num))
         (comparison_operator) 
-        (list 
+        (array 
           (num) 
           (num) 
           (num))))
@@ -226,7 +226,7 @@ if (list != [4, 5, 6]) {
 (source_file
   (assignment
     name: (identifier)
-    value: (list
+    value: (array
       (num)
       (num)
       (num)))
@@ -235,7 +235,7 @@ if (list != [4, 5, 6]) {
       (comparison_expression
         (identifier)
         (comparison_operator)
-        (list
+        (array
           (num)
           (num)
           (num))))

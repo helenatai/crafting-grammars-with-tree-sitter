@@ -1,0 +1,74 @@
+==================
+Missing Parameters
+==================
+
+circle();  
+circle(100, 100);  
+rect(200, 300, 150);  
+line(50, 50); 
+
+---
+
+(source_file
+  (ERROR
+    (num)
+    (num)
+    (num)
+    (num)
+    (num)
+    (num)
+    (num)))
+
+================
+Extra Parameters
+================
+
+circle(100, 100, 50, 20); 
+rect(200, 300, 150, 200, 50);  
+line(10, 20, 30, 40, 50);
+
+---
+
+(source_file
+      (draw_function
+        (circle_function
+          (num)
+          (num)
+          (ERROR
+            (num))
+          (num)))
+      (draw_function
+        (rect_function
+          (num)
+          (num)
+          (num)
+          (num)
+          (ERROR
+            (num))))
+      (draw_function
+        (line_function
+          (num)
+          (num)
+          (num)
+          (ERROR
+            (num))
+          (num))))
+
+==============
+Invalid Syntax
+==============
+
+circle 100, 100, 50;
+rect(100,100,50; 
+
+---
+
+(source_file
+    (ERROR
+    (num)
+    (num))
+    (num)
+    (ERROR
+    (num)
+    (num)
+    (num)))

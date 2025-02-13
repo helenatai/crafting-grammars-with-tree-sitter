@@ -2,37 +2,38 @@
 Single line comments
 ====================
 
-/Not a comment
+#Not a comment
 
 --- 
 (source_file
    (ERROR
-         (UNEXPECTED 'N'))
-      (identifier)
-      (identifier)
-      (identifier))
-   (ERROR))
+      (ERROR
+         (ERROR)
+         (identifier)
+         (identifier)
+         (identifier)))
 
 ====================
 Block comments Open
 ====================
 
-/Wren Language*/
+#Wren Language*#
 
 ---
 (source_file
   (ERROR 
-    (UNEXPECTED 'W')
-    (identifier)
-    (identifier)
-    (UNEXPECTED '*')))
+      (UNEXPECTED 'W')
+      (identifier)
+      (identifier)
+      (arithmetic_operator)
+      (UNEXPECTED '\n')))
 
 ====================
 Block comments Close
 ====================
 
-/* Wren language
-/
+#* Wren language
+#
 
 ---
 (source_file

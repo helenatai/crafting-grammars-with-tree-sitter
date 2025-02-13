@@ -2,9 +2,9 @@
 Single line comments
 ====================
 
-// Wren language
-//Wren language
-//    Wren language
+## Wren language
+##Wren language
+##    Wren language
 
 ---
 
@@ -17,27 +17,27 @@ Single line comments
 Block comments
 ====================
 
-/*Wren Language*/
+#*Wren Language*#
 
-/* Wren language */
+#* Wren language *#
 
-/* Wren Language
-   */
+#* Wren Language
+   *#
 
-/* 
-   Wren Language */
+#* 
+   Wren Language *#
 
-/* 
+#* 
    Wren Language 
- */
+ *#
 
-/* 
+#* 
   
 
    Wren Language 
 
 
- */
+ *#
 ---
 
 (source_file 
@@ -45,5 +45,18 @@ Block comments
   (comment)
   (comment)
   (comment)
+  (comment)
+  (comment))
+
+========================================
+Block Comments with Special Characters
+========================================
+
+#* A comment with a * inside *#
+#* A comment with a # inside *#
+
+---
+
+(source_file
   (comment)
   (comment))
