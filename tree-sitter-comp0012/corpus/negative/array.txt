@@ -28,6 +28,18 @@ Invalid Array Literals
     (string)
     (MISSING identifier)))
 
+===================================
+Empty Array Literal with Only Comma
+===================================
+
+[,];
+
+---
+
+(source_file
+  (array
+    (ERROR)))
+
 ==========================
 Invalid Array Declarations
 ==========================
@@ -38,17 +50,13 @@ var nums = new [x + y];
 ---
 
 (source_file
-  (assignment
+  (array_declaration
     (identifier)
     (ERROR
-      (identifier))
-    (ERROR)
-    (binary_expression
       (identifier)
-      (arithmetic_operator)
-      (identifier)))
-  (ERROR))
-
+      (identifier))
+    (identifier)))
+    
 ===========================
 Invalid Array Assignments
 ===========================
@@ -72,13 +80,12 @@ numbers[] = 42;
     (MISSING identifier)
     (num)))
 
-=======================
-Invalid Array Access
-=======================
+=============================
+Array Access with Empty Index
+=============================
 
 var floats = [0.2, 5.2, 5.6, 6.7];
 var x = floats[];  
-var y = floats[2 3]; 
 
 ---
 
@@ -94,14 +101,69 @@ var y = floats[2 3];
     (identifier)
     (array_access
       (identifier)
-      (MISSING identifier)))
-  (assignment
-    (identifier)
-    (array_access
-      (identifier)
-      (num)
-      (ERROR
-        (num)))))
+      (MISSING identifier))))
+
+==================================
+Array Access with Multiple Indices
+==================================
+
+var floats = [0.2, 5.2, 5.6, 6.7];
+var x = floats[0, 1];
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (array
+          (num)
+          (num)
+          (num)
+          (num)))
+      (assignment
+        (identifier)
+        (array_access
+          (identifier)
+          (ERROR
+            (num))
+          (num))))
+
+============================
+Invalid Nested Array Syntax
+============================
+
+var nested = [[1, 2], [, 3], [4, 5]];  
+var multiDepth = [[[1], [2,]], [[3], [4]]];
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (array
+          (array
+            (num)
+            (num))
+          (array
+            (ERROR)
+            (num))
+          (array
+            (num)
+            (num))))
+      (assignment
+        (identifier)
+        (array
+          (array
+            (array
+              (num))
+            (array
+              (num)
+              (ERROR)))
+          (array
+            (array
+              (num))
+            (array
+              (num))))))
 
 ==============================
 Arrays with Binary Expressions

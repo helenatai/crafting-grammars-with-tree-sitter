@@ -175,6 +175,10 @@
         "required": true,
         "types": [
           {
+            "type": "identifier",
+            "named": true
+          },
+          {
             "type": "num",
             "named": true
           }
@@ -365,7 +369,15 @@
           "named": true
         },
         {
+          "type": "array",
+          "named": true
+        },
+        {
           "type": "array_access",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
           "named": true
         },
         {
@@ -374,6 +386,10 @@
         },
         {
           "type": "bool",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
           "named": true
         },
         {
@@ -386,6 +402,10 @@
         },
         {
           "type": "num",
+          "named": true
+        },
+        {
+          "type": "postfix_expression",
           "named": true
         },
         {

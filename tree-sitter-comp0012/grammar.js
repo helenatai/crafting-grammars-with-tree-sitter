@@ -33,18 +33,18 @@ module.exports = grammar({
 				field("name", $.identifier),
 				$.argument_list,
 			),
-
-		_expression: ($) =>
-			choice(
-				$._value,
-				$.identifier,
-				$.array,
-				$.comparison_expression,
-				$.unary_expression,
-				$.postfix_expression,
-				$.binary_expression,
-				$.array_access
-			),
+		
+			_expression: ($) =>
+				choice(
+					$._value,
+					$.identifier,
+					$.array,
+					$.comparison_expression,
+					$.unary_expression,
+					$.postfix_expression,
+					$.binary_expression,
+					$.array_access
+				),
 		
 		unary_operator: ($) =>
 			choice("-", "!", "~", "++", "--"),
@@ -72,9 +72,9 @@ module.exports = grammar({
 
 		binary_expression: ($) =>
 			prec.left(2, seq(
-				choice($._value, $.identifier, $.unary_expression, $.array_access),
+				$._expression,
 				choice($.arithmetic_operator, $.bitwise_operator, $.logical_operator),
-				choice($._value, $.identifier, $.unary_expression, $.array_access)
+				$._expression
 			)),
 
 		array: ($) =>
@@ -112,7 +112,7 @@ module.exports = grammar({
 				"=",
 				"new",
 				"[",
-				field("size", $.num),  
+				field("size", choice($.num, $.identifier)),  
 				"]"
 			),
 		
