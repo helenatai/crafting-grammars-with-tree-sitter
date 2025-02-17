@@ -4,3 +4,6 @@
 
 TODO
 
+Array Slicing Motivation
+
+

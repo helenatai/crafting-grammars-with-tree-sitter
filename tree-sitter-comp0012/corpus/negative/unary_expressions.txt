@@ -1,0 +1,100 @@
+================================
+Unary Operator Without Operand
+================================
+
+var x = -;
+var y = !;
+var z = ~;
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (MISSING identifier)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (MISSING identifier)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (MISSING identifier))))
+
+====================================
+Unary Operator Applied to an Array
+====================================
+
+var x = -[1, 2, 3];
+var y = ![true, false];
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (ERROR
+          (unary_operator))
+        (array
+          (int)
+          (int)
+          (int)))
+      (assignment
+        (identifier)
+        (ERROR
+          (unary_operator))
+        (array
+          (bool)
+          (bool))))
+
+======================================
+Unary Operators Applied to Functions
+======================================
+
+var x = -getSize();
+var y = !drawSquare();
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (identifier)))
+    (ERROR)
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (identifier)))
+    (ERROR))
+
+=====================================
+Postfix Operators Without Identifiers
+=====================================
+
+10++;
+true--;
+"hello"++;
+
+---
+
+(source_file
+    (int)
+    (ERROR
+    (arithmetic_operator))
+    (binary_expression
+    (bool)
+    (arithmetic_operator)
+    (unary_expression
+        (unary_operator)
+        (ERROR)
+        (string)))
+    (ERROR
+    (arithmetic_operator)))
+

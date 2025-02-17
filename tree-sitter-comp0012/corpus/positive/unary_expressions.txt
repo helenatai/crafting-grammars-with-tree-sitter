@@ -1,0 +1,160 @@
+=======================
+Basic Unary Expressions
+=======================
+
+var x = -5;
+var y = !true;
+var z = ~10;
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (int)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (bool)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (int))))
+
+================================
+Prefix Operators with Identifiers
+================================
+
+++x;
+--y;
+
+---
+
+(source_file
+    (unary_expression
+    (unary_operator)
+    (identifier))
+    (unary_expression
+    (unary_operator)
+    (identifier)))
+
+================================
+Unary Expressions with Variables
+================================
+
+var a = 10;
+var b = -a;
+var c = !b;
+var d = ~c;
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (int))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (identifier)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (identifier)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (identifier))))
+
+==================================
+Unary Expressions with Expressions
+==================================
+
+var x = -(5 + 3);
+var y = !(x > 10);
+var z = ~(y * 2);
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_operator)
+          (parenthesized_expression
+            (binary_expression
+              (int)
+              (arithmetic_operator)
+              (int)))))
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_operator)
+          (parenthesized_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (int)))))
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_operator)
+          (parenthesized_expression
+            (binary_expression
+              (identifier)
+              (arithmetic_operator)
+              (int))))))
+    
+
+
+=================================
+Unary Operators with Array Access
+=================================
+
+var arr = [10, 20, 30];
+var x = -arr[1];
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (array
+        (int)
+        (int)
+        (int)))
+    (assignment
+    (identifier)
+    (unary_expression
+        (unary_operator)
+        (array_access
+        (identifier)
+        (int)))))
+
+===========================================
+Postfix Expressions (Increment & Decrement)
+===========================================
+
+var x = 10;
+x++;
+x--;
+
+---
+
+(source_file
+(assignment
+    (identifier)
+    (int))
+(postfix_expression
+    (identifier))
+(postfix_expression
+    (identifier)))
+
+

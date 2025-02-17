@@ -1,0 +1,101 @@
+================
+Missing Operands
+================
+
+var invalid = +;
+var wrong = 5 * ;
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (ERROR
+        (identifier))
+    (int))
+    (ERROR
+    (arithmetic_operator)))
+
+====================
+Unclosed Parentheses
+====================
+
+var unclosed = 5 + 3);
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (binary_expression
+          (int)
+          (arithmetic_operator)
+          (int)))
+      (ERROR))
+
+=====================================
+Using an Array in a Binary Expression
+=====================================
+
+var invalid = [1, 2, 3] + [4, 5, 6];
+
+---
+
+(source_file
+      (assignment
+        (identifier)
+        (ERROR
+          (array
+            (int)
+            (int)
+            (int)))
+        (array
+          (int)
+          (int)
+          (int))))
+
+========================================
+Nested Parentheses with Missing Operator
+========================================
+
+var nestedError = ((x + y) z);
+
+---
+
+(source_file
+    (assignment
+    (identifier)
+    (parenthesized_expression
+        (parenthesized_expression
+        (binary_expression
+            (identifier)
+            (arithmetic_operator)
+            (identifier)))
+        (ERROR
+        (identifier)))))
+
+======================================================
+Logical Operator Instead of Comparison in If Condition
+======================================================
+
+if (x && y) {
+    line(10, 20, 30, 40);
+}
+
+---
+
+(source_file
+    (if_statement
+    (condition
+        (identifier)
+        (ERROR
+        (identifier)))
+    (block
+        (function_call
+        (identifier)
+        (argument_list
+            (int)
+            (int)
+            (int)
+            (int))))))
+

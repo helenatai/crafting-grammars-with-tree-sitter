@@ -1,0 +1,134 @@
+=====================
+Missing Function Name
+=====================
+
+function () {
+    circle(100, 100, 50);
+}
+
+---
+
+(source_file
+    (ERROR)
+    (block
+    (function_call
+        (identifier)
+        (argument_list
+        (int)
+        (int)
+        (int)))))
+
+============================
+Function Without Parentheses
+============================
+
+function drawSquare {
+    rect(50, 50, 100, 100);
+}
+
+---
+
+(source_file
+    (ERROR
+    (identifier))
+    (block
+    (function_call
+        (identifier)
+        (argument_list
+        (int)
+        (int)
+        (int)
+        (int)))))
+
+=======================
+Function Without a Body
+=======================
+
+function drawCircle(x, y, diameter);
+
+---
+
+(source_file
+    (ERROR
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))
+
+===================================
+Return Statement Outside a Function
+===================================
+
+return 50;
+
+---
+
+(source_file
+    (identifier)
+    (ERROR
+        (int)))
+
+===============================
+Function with Extra Parentheses
+===============================
+
+function drawCircle((x, y, diameter)) {
+    circle(x, y, diameter);
+}
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+    (ERROR)
+    (identifier)
+    (identifier)
+    (identifier)
+    (ERROR)
+    (function_call
+        (identifier)
+        (argument_list
+            (identifier)
+            (identifier)
+            (identifier)))))
+
+====================================================
+Function Declaration with Numbers as Parameter Names
+====================================================
+
+function invalid(1x, 2y) {
+    return 10;
+}
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+    (ERROR
+        (int))
+    (identifier)
+    (ERROR
+        (int))
+    (identifier)
+    (return_statement
+        (int))))
+
+========================================
+Function With Invalid Characters in Name
+========================================
+
+function 123getValue() {
+    return 100;
+}
+
+---
+
+(source_file
+    (function_declaration
+    (ERROR
+        (int))
+    (identifier)
+    (return_statement
+        (int))))

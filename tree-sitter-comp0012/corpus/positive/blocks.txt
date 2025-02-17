@@ -13,11 +13,14 @@ Numbers (nums)
     0; 
 }
 ---
-
-(source_file 
-  (block (num))
-  (block (num))
-  (block (num))
-  (block (num))
-  (block (num))
-  )
+(source_file
+  (block
+    (int))
+  (block
+    (int))
+  (block
+    (int))
+  (block
+    (int))
+  (block
+    (int)))

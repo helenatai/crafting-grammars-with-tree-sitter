@@ -1,6 +1,6 @@
-=================
+================================================================================
 Simple Conditions
-=================
+================================================================================
 
 if (10 > 5) { 
   System.print("Correct");
@@ -20,73 +20,70 @@ if (false) {
   System.print("This runs instead");
 }
 
----
+--------------------------------------------------------------------------------
 
-(source_file 
-  (if_statement 
-    condition: (condition 
-      (comparison_expression 
-        (num) 
-        (comparison_operator) 
-        (num)))
+(source_file
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (int)
+        (comparison_operator)
+        (int)))
     consequence: (block
-      (method_call 
-        receiver: (identifier) 
-        name: (identifier) 
-        (argument_list 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
           (string)))))
-
-  (if_statement 
-    condition: (condition 
-      (comparison_expression 
-        (string) 
-        (comparison_operator) 
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (string)
+        (comparison_operator)
         (string)))
     consequence: (block
-      (method_call 
-        receiver: (identifier) 
-        name: (identifier) 
-        (argument_list 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
           (string)))))
-
-  (if_statement 
-    condition: (condition 
-      (comparison_expression 
-        (array 
-          (num) 
-          (num) 
-          (num))
-        (comparison_operator) 
-        (array 
-          (num) 
-          (num) 
-          (num))))
+  (if_statement
+    condition: (condition
+      (comparison_expression
+        (array
+          (int)
+          (int)
+          (int))
+        (comparison_operator)
+        (array
+          (int)
+          (int)
+          (int))))
     consequence: (block
-      (method_call 
-        receiver: (identifier) 
-        name: (identifier) 
-        (argument_list 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
           (string)))))
-
-  (if_statement 
-    condition: (condition 
+  (if_statement
+    condition: (condition
       (bool))
     consequence: (block
-      (method_call 
-        receiver: (identifier) 
-        name: (identifier) 
-        (argument_list 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
           (string))))
     alternative: (block
-      (method_call 
-        receiver: (identifier) 
-        name: (identifier) 
-        (argument_list 
+      (method_call
+        receiver: (identifier)
+        name: (identifier)
+        (argument_list
           (string))))))
 
-====================
+================================================================================
 Variable Comparisons
-====================
+================================================================================
 
 var x = 10;
 var y = 5;
@@ -105,22 +102,21 @@ if (flag == false){
   System.print("Boolean negation works");
 }
 
----
+--------------------------------------------------------------------------------
 
-(source_file 
-  (assignment 
-    name: (identifier)
-    value: (num))
+(source_file
   (assignment
     name: (identifier)
-    value: (num))
+    value: (int))
+  (assignment
+    name: (identifier)
+    value: (int))
   (assignment
     name: (identifier)
     value: (string))
   (assignment
     name: (identifier)
     value: (bool))
-
   (if_statement
     condition: (condition
       (comparison_expression
@@ -133,7 +129,6 @@ if (flag == false){
         name: (identifier)
         (argument_list
           (string)))))
-
   (if_statement
     condition: (condition
       (comparison_expression
@@ -146,23 +141,22 @@ if (flag == false){
         name: (identifier)
         (argument_list
           (string)))))
-
   (if_statement
     condition: (condition
       (comparison_expression
         (identifier)
         (comparison_operator)
         (bool)))
-    consequence: (block 
-      (method_call 
+    consequence: (block
+      (method_call
         receiver: (identifier)
         name: (identifier)
-        (argument_list 
+        (argument_list
           (string))))))
 
-==============
+================================================================================
 Nested If-Else
-==============
+================================================================================
 
 var age = 25;
 if (age > 18) {
@@ -174,18 +168,18 @@ if (age > 18) {
     System.print("User is a minor");
 }
 
----
+--------------------------------------------------------------------------------
 
 (source_file
   (assignment
     name: (identifier)
-    value: (num))
+    value: (int))
   (if_statement
     condition: (condition
       (comparison_expression
         (identifier)
         (comparison_operator)
-        (num)))
+        (int)))
     consequence: (block
       (method_call
         receiver: (identifier)
@@ -197,7 +191,7 @@ if (age > 18) {
           (comparison_expression
             (identifier)
             (comparison_operator)
-            (num)))
+            (int)))
         consequence: (block
           (method_call
             receiver: (identifier)
@@ -211,9 +205,9 @@ if (age > 18) {
         (argument_list
           (string))))))
 
-==================
+================================================================================
 If-Else with Lists
-==================
+================================================================================
 
 var list = [1, 2, 3];
 
@@ -221,24 +215,24 @@ if (list != [4, 5, 6]) {
     System.print("Lists are different");
 }
 
----
+--------------------------------------------------------------------------------
 
 (source_file
   (assignment
     name: (identifier)
     value: (array
-      (num)
-      (num)
-      (num)))
+      (int)
+      (int)
+      (int)))
   (if_statement
     condition: (condition
       (comparison_expression
         (identifier)
         (comparison_operator)
         (array
-          (num)
-          (num)
-          (num))))
+          (int)
+          (int)
+          (int))))
     consequence: (block
       (method_call
         receiver: (identifier)
@@ -246,14 +240,14 @@ if (list != [4, 5, 6]) {
         (argument_list
           (string))))))
 
-==========
+================================================================================
 Edge Cases
-==========
+================================================================================
 
 if (true) { }  
 if (x > 0) { System.print("valid"); } else { }
 
----
+--------------------------------------------------------------------------------
 
 (source_file
   (if_statement
@@ -265,7 +259,7 @@ if (x > 0) { System.print("valid"); } else { }
       (comparison_expression
         (identifier)
         (comparison_operator)
-        (num)))
+        (int)))
     consequence: (block
       (method_call
         receiver: (identifier)

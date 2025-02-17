@@ -1,0 +1,407 @@
+==============
+Array Literals
+==============
+
+[];
+[1];
+[1, true, "str"];
+
+---
+
+(source_file
+  (array)
+  (array
+    (int))
+  (array
+    (int)
+    (bool)
+    (string)))
+
+===========================
+Array Declarations (new [])
+===========================
+
+var numbers = new [3];
+var floats = new [10];
+
+---
+
+(source_file
+  (array_declaration
+    (identifier)
+    (int))
+  (array_declaration
+    (identifier)
+    (int)))
+
+==============
+Array Element Assignment
+==============
+
+var numbers = new [3];
+numbers[0] = 90;
+numbers[1] = 150;
+numbers[2] = 30;
+
+---
+
+(source_file
+  (array_declaration
+    (identifier)
+    (int))
+  (array_element_assignment
+    (identifier)
+    (int)
+    (int))
+  (array_element_assignment
+    (identifier)
+    (int)
+    (int))
+  (array_element_assignment
+    (identifier)
+    (int)
+    (int)))
+
+===========================
+Array Access in Expressions
+===========================
+
+var floats = [0.2, 5.2, 5.6, 6.7];
+var x = floats[0];
+var z = floats[1];
+var z = floats[1] + floats[2];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (float)
+      (float)
+      (float)
+      (float)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)))
+  (assignment
+    (identifier)
+    (binary_expression
+      (array_access
+        (identifier)
+        (int))
+      (arithmetic_operator)
+      (array_access
+        (identifier)
+        (int)))))
+
+=======================
+Arrays with Expressions
+=======================
+
+var data = [1 + 2, 3 * 4, 10 / 2];  
+var computed = [x, y, z, x + y, y * z];  
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (binary_expression
+        (int)
+        (arithmetic_operator)
+        (int))
+      (binary_expression
+        (int)
+        (arithmetic_operator)
+        (int))
+      (binary_expression
+        (int)
+        (arithmetic_operator)
+        (int))))
+  (assignment
+    (identifier)
+    (array
+      (identifier)
+      (identifier)
+      (identifier)
+      (binary_expression
+        (identifier)
+        (arithmetic_operator)
+        (identifier))
+      (binary_expression
+        (identifier)
+        (arithmetic_operator)
+        (identifier)))))
+
+=============
+Nested Arrays
+=============
+
+var nested = [[1, 2], [3, 4], [5, 6]];
+var multiDepth = [[[1], [2]], [[3], [4]]];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (array
+        (int)
+        (int))
+      (array
+        (int)
+        (int))
+      (array
+        (int)
+        (int))))
+  (assignment
+    (identifier)
+    (array
+      (array
+        (array
+          (int))
+        (array
+          (int)))
+      (array
+        (array
+          (int))
+        (array
+          (int))))))
+
+============
+Empty Arrays
+============
+
+var empty1 = [];
+var empty2 = new [0];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array))
+  (array_declaration
+    (identifier)
+    (int)))
+
+==================
+Array of Variables
+==================
+
+var x = 10;
+var y = 20;
+var z = 30;
+var varsArray = [x, y, z];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (int))
+  (assignment
+    (identifier)
+    (int))
+  (assignment
+    (identifier)
+    (int))
+  (assignment
+    (identifier)
+    (array
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===========================
+Array with Mixed Data Types
+===========================
+
+var mixed = [42, "hello", true, 3.14];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (int)
+      (string)
+      (bool)
+      (float))))
+
+===================
+Array with For Loop
+===================
+
+var nums = [1, 2, 3, 4, 5];
+for (var i = 0; i < 5; i = i + 1) {
+    nums[i] = nums[i] * 2;
+}
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (int)
+      (int)
+      (int)
+      (int)
+      (int)))
+  (for_statement
+    (assignment
+      (identifier)
+      (int))
+    (comparison_expression
+      (identifier)
+      (comparison_operator)
+      (int))
+    (reassignment
+      (identifier)
+      (binary_expression
+        (identifier)
+        (arithmetic_operator)
+        (int)))
+    (block
+      (array_element_assignment
+        (identifier)
+        (identifier)
+        (binary_expression
+          (array_access
+            (identifier)
+            (identifier))
+          (arithmetic_operator)
+          (int))))))
+
+==================
+Basic Array Slices
+==================
+
+var firstHalf = numbers[:5];
+var lastHalf = numbers[3:];
+var middleSlice = numbers[2:4];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)
+      (int))))
+
+===========================
+Array Slices with Variables
+===========================
+
+var start = 2;
+var end = 5;
+var subArray = numbers[start:end];
+var openEnd = numbers[:end];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (int))
+  (assignment
+    (identifier)
+    (int))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (identifier)
+      (identifier)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (identifier))))
+
+============================
+Array Slices with Expressions
+============================
+
+var part1 = numbers[1 + 2:5];
+var part2 = numbers[3:2 * 5];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (binary_expression
+        (int)
+        (arithmetic_operator)
+        (int))
+      (int)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (int)
+      (binary_expression
+        (int)
+        (arithmetic_operator)
+        (int)))))
+
+===============
+Full Array Copy
+===============
+
+var copy = numbers[:];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array_access
+      (identifier))))
+
+=====================
+Nested Array Slicing
+=====================
+
+var nestedSlice = matrix[1:3][2:4];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array_access
+      (array_access
+        (identifier)
+        (int)
+        (int))
+      (int)
+      (int))))
+

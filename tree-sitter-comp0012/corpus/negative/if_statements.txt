@@ -1,6 +1,6 @@
-====================
-Invalid Conditionals 
-====================
+================================================================================
+Invalid Conditionals
+================================================================================
 
 if (10 + 5) { 
     System.print("Condition should be a boolean or comparison");
@@ -14,12 +14,12 @@ if ("hello" !== "world") {
     System.print("Invalid operator");
 }
 
----
+--------------------------------------------------------------------------------
 
 (source_file
   (ERROR
-    (num)
-    (num))
+    (int)
+    (int))
   (block
     (method_call
       receiver: (identifier)
@@ -27,8 +27,8 @@ if ("hello" !== "world") {
       (argument_list
         (string))))
   (ERROR
-    (num)
-    (num))
+    (int)
+    (int))
   (block
     (method_call
       receiver: (identifier)
@@ -36,22 +36,22 @@ if ("hello" !== "world") {
       (argument_list
         (string))))
   (if_statement
-    condition: (condition 
+    condition: (condition
       (comparison_expression
         (string)
         (comparison_operator)
         (ERROR)
         (string)))
     consequence: (block
-      (method_call 
+      (method_call
         receiver: (identifier)
         name: (identifier)
         (argument_list
           (string))))))
 
-===================
+================================================================================
 Invalid Else Syntax
-===================
+================================================================================
 
 else {
     System.print("Else without if");
@@ -61,29 +61,29 @@ if (false) {
     System.print("Correct if");
 } else System.print("Invalid else statement");
 
----
+--------------------------------------------------------------------------------
 
-(source_file 
+(source_file
   (ERROR
     (identifier))
-  (block 
-    (method_call 
+  (block
+    (method_call
       receiver: (identifier)
       name: (identifier)
       (argument_list
         (string))))
-  (if_statement 
+  (if_statement
     condition: (condition
       (bool))
-    consequence: (block 
-      (method_call 
+    consequence: (block
+      (method_call
         receiver: (identifier)
         name: (identifier)
         (argument_list
           (string)))))
   (ERROR)
-  (method_call 
+  (method_call
     receiver: (identifier)
     name: (identifier)
-    (argument_list 
+    (argument_list
       (string))))

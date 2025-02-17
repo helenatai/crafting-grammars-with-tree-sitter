@@ -1,0 +1,402 @@
+==========================
+Basic Function Declaration
+==========================
+
+function drawSquare() {
+    rect(50, 50, 100, 100);
+}
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+        (function_call
+          (identifier)
+          (argument_list
+            (int)
+            (int)
+            (int)
+            (int)))))
+
+========================
+Function with Parameters
+========================
+
+function drawCircle(x, y, diameter) {
+    circle(x, y, diameter);
+}
+
+---
+
+(source_file
+      (function_declaration
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (function_call
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)
+            (identifier)))))
+
+==============================
+Function Call in Draw Function
+==============================
+
+function drawShapes() {
+    drawCircle(100, 100, 50);
+    drawSquare();
+}
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+        (function_call
+          (identifier)
+          (argument_list
+            (int)
+            (int)
+            (int)))
+        (function_call
+          (identifier)
+          (argument_list))))
+
+==========================
+Function Returning a Value
+==========================
+
+function getSize() {
+    return 50;
+}
+
+circle(200, 200, getSize());
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+        (return_statement
+          (int)))
+    (function_call
+    (identifier)
+    (argument_list
+        (int)
+        (int)
+        (function_call
+        (identifier)
+        (argument_list)))))
+
+==========================
+Function with Calculations
+==========================
+
+function getPosition(scale) {
+    return 100 * scale;
+}
+
+rect(getPosition(2), 150, 50, 50);
+
+---
+
+(source_file
+    (function_declaration
+    (identifier)
+    (identifier)
+    (return_statement
+        (binary_expression
+            (int)
+            (arithmetic_operator)
+            (identifier))))
+    (function_call
+    (identifier)
+    (argument_list
+        (function_call
+        (identifier)
+        (argument_list
+            (int)))
+        (int)
+        (int)
+        (int))))
+
+=======================
+Function with For Loops
+=======================
+
+function drawRow(y) {
+    for (var i = 0; i < 5; i = i + 1) {
+        circle(i * 50, y, 20);
+    }
+}
+
+drawRow(100);
+
+---
+
+(source_file
+    (function_declaration
+            (identifier)
+            (identifier)
+            (for_statement
+            (assignment
+                (identifier)
+                (int))
+            (comparison_expression
+                (identifier)
+                (comparison_operator)
+                (int))
+            (reassignment
+                (identifier)
+                (binary_expression
+                (identifier)
+                (arithmetic_operator)
+                (int)))
+            (block
+                (function_call
+                (identifier)
+                (argument_list
+                    (binary_expression
+                    (identifier)
+                    (arithmetic_operator)
+                    (int))
+                    (identifier)
+                    (int))))))
+        (function_call
+            (identifier)
+            (argument_list
+            (int))))
+    
+
+=====================
+Nested Function Calls
+=====================
+
+function add(a, b) {
+    return a + b;
+}
+
+function multiply(x, y) {
+    return x * y;
+}
+
+var result = multiply(add(2, 3), 4);
+
+---
+
+(source_file
+    (function_declaration
+            (identifier)
+            (identifier)
+            (identifier)
+            (return_statement
+            (binary_expression
+                (identifier)
+                (arithmetic_operator)
+                (identifier))))
+        (function_declaration
+            (identifier)
+            (identifier)
+            (identifier)
+            (return_statement
+            (binary_expression
+                (identifier)
+                (arithmetic_operator)
+                (identifier))))
+        (assignment
+        (identifier)
+        (function_call
+          (identifier)
+          (argument_list
+            (function_call
+              (identifier)
+              (argument_list
+                (int)
+                (int)))
+            (int)))))
+    
+
+=====================
+Functions with Arrays
+=====================
+
+function scaleArray(arr, factor) {
+    for (var i = 0; i < arr.length; i = i + 1) {
+        arr[i] = arr[i] * factor;
+    }
+}
+
+var data = [1, 2, 3, 4, 5];
+scaleArray(data, 2);
+
+---
+
+(source_file
+    (function_declaration
+        (identifier)
+        (identifier)
+        (identifier)
+        (for_statement
+          (assignment
+            (identifier)
+            (int))
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (property_access
+              (identifier)
+              (identifier)))
+          (reassignment
+            (identifier)
+            (binary_expression
+              (identifier)
+              (arithmetic_operator)
+              (int)))
+          (block
+            (array_element_assignment
+              (identifier)
+              (identifier)
+              (binary_expression
+                (array_access
+                  (identifier)
+                  (identifier))
+                (arithmetic_operator)
+                (identifier))))))
+      (assignment
+        (identifier)
+        (array
+          (int)
+          (int)
+          (int)
+          (int)
+          (int)))
+      (function_call
+        (identifier)
+        (argument_list
+          (identifier)
+          (int))))
+    
+
+========================
+Recursive Function Calls
+========================
+
+function drawFractal(x, y, size) {
+    if (size > 5) {
+        circle(x, y, size);
+        drawFractal(x - size / 2, y, size / 2);
+        drawFractal(x + size / 2, y, size / 2);
+    }
+}
+
+drawFractal(200, 200, 100);
+
+---
+
+(source_file
+    (function_declaration
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (if_statement
+          (condition
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (int)))
+          (block
+            (function_call
+              (identifier)
+              (argument_list
+                (identifier)
+                (identifier)
+                (identifier)))
+            (function_call
+              (identifier)
+              (argument_list
+                (binary_expression
+                  (binary_expression
+                    (identifier)
+                    (arithmetic_operator)
+                    (identifier))
+                  (arithmetic_operator)
+                  (int))
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (arithmetic_operator)
+                  (int))))
+            (function_call
+              (identifier)
+              (argument_list
+                (binary_expression
+                  (binary_expression
+                    (identifier)
+                    (arithmetic_operator)
+                    (identifier))
+                  (arithmetic_operator)
+                  (int))
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (arithmetic_operator)
+                  (int)))))))
+      (function_call
+        (identifier)
+        (argument_list
+          (int)
+          (int)
+          (int))))
+
+============================
+Functions Returning an Array
+============================
+
+function generatePalette() {
+    return [color(255, 0, 0), color(0, 255, 0), color(0, 0, 255)];
+}
+
+var colors = generatePalette();
+fill(colors[0]);
+
+---
+
+(source_file
+   (function_declaration
+        (identifier)
+        (return_statement
+          (array
+            (function_call
+              (identifier)
+              (argument_list
+                (int)
+                (int)
+                (int)))
+            (function_call
+              (identifier)
+              (argument_list
+                (int)
+                (int)
+                (int)))
+            (function_call
+              (identifier)
+              (argument_list
+                (int)
+                (int)
+                (int))))))
+      (assignment
+        (identifier)
+        (function_call
+          (identifier)
+          (argument_list)))
+      (function_call
+        (identifier)
+        (argument_list
+          (array_access
+            (identifier)
+            (int)))))

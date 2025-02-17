@@ -21,11 +21,19 @@ module.exports = grammar({
 		_value: ($) =>
 			prec(2, choice(
 				$.bool,
-				$.num,
+				$.int,
+				$.float,
 				$.string,
 			)),
 
-		argument_list: ($) => seq("(", repeat($._expression), ")"),
+		argument_list: ($) =>
+			seq(
+				"(",
+				optional(seq($._expression, repeat(seq(",", $._expression)))),
+				")"
+			),
+			
+
 		method_call: ($) =>
 			seq(
 				field("receiver", $.identifier),
@@ -34,17 +42,55 @@ module.exports = grammar({
 				$.argument_list,
 			),
 		
-			_expression: ($) =>
-				choice(
-					$._value,
-					$.identifier,
-					$.array,
-					$.comparison_expression,
-					$.unary_expression,
-					$.postfix_expression,
-					$.binary_expression,
-					$.array_access
-				),
+		function_declaration: ($) =>
+			seq(
+				"function",
+				field("name", $.identifier),
+				field("parameters", seq(
+				"(",
+				optional(seq($.identifier, repeat(seq(",", $.identifier)))),
+				")"
+				)),
+				field("body", seq(
+					"{",
+					repeat(choice(
+						$._statement,
+						$.return_statement  
+					)),
+					"}"
+				))
+			),
+		
+		function_call: ($) =>
+			seq(
+				field("name", $.identifier),
+				field("arguments", $.argument_list)
+			),
+		
+		return_statement: ($) =>
+			seq("return", optional($._expression), ";"),
+
+		property_access: ($) =>
+			seq(
+				field("object", $.identifier),
+				".",
+				field("property", $.identifier)
+			),
+		
+		_expression: ($) =>
+			choice(
+				$.function_call,
+				$._value,
+				$.identifier,
+				$.array,
+				$.comparison_expression,
+				$.unary_expression,
+				$.postfix_expression,
+				$.binary_expression,
+				$.array_access,
+				$.property_access,
+				$.parenthesized_expression 
+			),
 		
 		unary_operator: ($) =>
 			choice("-", "!", "~", "++", "--"),
@@ -52,12 +98,17 @@ module.exports = grammar({
 		unary_expression: ($) =>
 			prec(3, seq(
 				$.unary_operator,
-				choice($._value, $.identifier, $.array_access)
+				choice(
+					$._value,            
+					$.identifier,        
+					$.array_access,     
+					$.parenthesized_expression  
+				)
 			)),
 		
 		postfix_expression: ($) =>
 			prec(4, seq(
-				choice($.identifier, $._value, $.array, $.array_access),
+				$.identifier,
 				choice("++", "--")
 			)),
 		
@@ -72,26 +123,54 @@ module.exports = grammar({
 
 		binary_expression: ($) =>
 			prec.left(2, seq(
-				$._expression,
+				choice(
+					$._value,   
+					$.identifier,  
+					$.array_access,  
+					$.unary_expression, 
+					$.parenthesized_expression,
+					$.binary_expression, 
+					$.postfix_expression,
+					$.function_call  
+				),  
 				choice($.arithmetic_operator, $.bitwise_operator, $.logical_operator),
-				$._expression
+				choice(
+					$._value,   
+					$.identifier,  
+					$.array_access,  
+					$.unary_expression,  
+					$.parenthesized_expression,  
+					$.binary_expression,
+					$.postfix_expression,
+					$.function_call  
+				)  
 			)),
+		
+		parenthesized_expression: ($) =>
+			seq("(", $._expression, ")"),
 
 		array: ($) =>
 			seq(
 				"[",
 				optional(
-					seq(choice($._value, $.identifier, $.unary_expression, $.binary_expression, $.array), 
-					repeat(seq(",", choice($._value, $.identifier, $.unary_expression, $.binary_expression, $.array))))
+					seq(choice($._value, $.identifier, $.unary_expression, $.binary_expression, $.array, $.function_call), 
+					repeat(seq(",", choice($._value, $.identifier, $.unary_expression, $.binary_expression, $.array, $.function_call))))
 				),
 				"]"
 			),
 		
 		array_access: ($) =>
 			prec.left(4, seq( 
-				field("name", $.identifier),
+				field("array", choice($.identifier, $.array_access)),  
 				"[",
-				field("index", $._expression),
+				choice(
+					field("index", $._expression),  
+					seq(
+						optional(field("start", $._expression)), 
+						":",
+						optional(field("end", $._expression))    
+					)
+				),
 				"]"
 			)),
 		
@@ -112,7 +191,7 @@ module.exports = grammar({
 				"=",
 				"new",
 				"[",
-				field("size", choice($.num, $.identifier)),  
+				field("size", choice($.int, $.identifier)),  
 				"]"
 			),
 		
@@ -152,9 +231,28 @@ module.exports = grammar({
 		comparison_expression: ($) =>
 			prec.left(1,
 				seq(
-					choice($._value, $.identifier, $.unary_expression, $.array_access, $.array),
+					choice(
+						$._value,   
+						$.identifier,  
+						$.array_access,  
+						$.unary_expression,  
+						$.parenthesized_expression,  
+						$.unary_expression,
+						$.array,
+						$.function_call  
+					),
 					$.comparison_operator,
-					choice($._value, $.identifier, $.unary_expression, $.array_access, $.array)
+					choice(
+						$._value,   
+						$.identifier,  
+						$.array_access,  
+						$.unary_expression,  
+						$.parenthesized_expression, 
+						$.unary_expression,
+						$.array, 
+						$.property_access,
+						$.function_call  
+					)
 				)	
 			),
 
@@ -183,57 +281,25 @@ module.exports = grammar({
 				seq($.if_statement),
 				seq($.while_statement),
 				seq($.for_statement),
-				seq($.draw_function, ";")
-			),
-		
-		draw_function: ($) =>
-			choice(
-				$.circle_function,
-				$.rect_function,
-				$.line_function
-			),
-		
-		circle_function: ($) =>
-			seq(
-				"circle", "(",
-				$._expression, ",",  // x coordinate
-				$._expression, ",",  // y coordinate
-				$._expression,       // diameter
-				")",
-			),
-
-		rect_function: ($) =>
-			seq(
-				"rect", "(",
-				$._expression, ",",  // x coordinate
-				$._expression, ",",  // y coordinate
-				$._expression, ",",  // width
-				$._expression,       // height
-				")", 
-			),
-		
-		line_function: ($) =>
-			seq(
-				"line", "(",
-				$._expression, ",",  // x1
-				$._expression, ",",  // y1
-				$._expression, ",",  // x2
-				$._expression,       // y2
-				")", 
+				seq($.function_declaration),
 			),
 
 		_newline: (_$) => /\s*\n/,
 		identifier: (_$) => /[A-Za-z_][A-Za-z0-9_]*/,
 		bool: (_$) => choice("true", "false"),
-		num: (_$) =>
+		int: (_$) =>
+			token(
+				/[0-9]+/
+			),
+		float: (_$) =>
 			token(
 				choice(
-					/[0-9]+/,              
 					/[0-9]+\.[0-9]+/,       
 					/[0-9]+\.[0-9]+[eE][+-]?[0-9]+/,  
 					/[0-9]+[eE][+-]?[0-9]+/   
 				)
 			),
+
 		string: (_$) => seq('"', /[^"]+/, '"'),
 
 		// http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890

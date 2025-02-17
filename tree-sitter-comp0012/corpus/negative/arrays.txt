@@ -1,0 +1,258 @@
+======================
+Invalid Array Literals
+======================
+
+[1, , 2];  
+[, 1, 2];  
+[1 2 3]; 
+[1, "hello", ]; 
+
+---
+
+(source_file
+  (array
+    (int)
+    (ERROR)
+    (int))
+  (array
+    (ERROR)
+    (int)
+    (int))
+  (array
+    (int)
+    (ERROR
+      (int)
+      (int)))
+  (array
+    (int)
+    (string)
+    (MISSING identifier)))
+
+===================================
+Empty Array Literal with Only Comma
+===================================
+
+[,];
+
+---
+
+(source_file
+  (array
+    (ERROR)))
+
+==========================
+Invalid Array Declarations
+==========================
+
+var nums = new [];  
+var nums = new [x + y];  
+
+---
+
+(source_file
+  (array_declaration
+    (identifier)
+    (ERROR
+      (identifier)
+      (identifier))
+    (identifier)))
+
+=========================
+Invalid Array Assignments
+=========================
+
+var numbers = new [3];
+numbers[0] = ;  
+numbers[] = 42;
+
+---
+
+(source_file
+  (array_declaration
+    (identifier)
+    (int))
+  (array_access
+    (identifier)
+    (int))
+  (ERROR)
+  (array_element_assignment
+    (identifier)
+    (MISSING identifier)
+    (int)))
+
+=============================
+Array Access with Empty Index
+=============================
+
+var floats = [0.2, 5.2, 5.6, 6.7];
+var x = floats[];  
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (float)
+      (float)
+      (float)
+      (float)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (MISSING identifier))))
+
+==================================
+Array Access with Multiple Indices
+==================================
+
+var floats = [0.2, 5.2, 5.6, 6.7];
+var x = floats[0, 1];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (float)
+      (float)
+      (float)
+      (float)))
+  (assignment
+    (identifier)
+    (array_access
+      (identifier)
+      (ERROR
+        (int))
+      (int))))
+
+===========================
+Invalid Nested Array Syntax
+===========================
+
+var nested = [[1, 2], [, 3], [4, 5]];  
+var multiDepth = [[[1], [2,]], [[3], [4]]];
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (array
+      (array
+        (int)
+        (int))
+      (array
+        (ERROR)
+        (int))
+      (array
+        (int)
+        (int))))
+  (assignment
+    (identifier)
+    (array
+      (array
+        (array
+          (int))
+        (array
+          (int)
+          (ERROR)))
+      (array
+        (array
+          (int))
+        (array
+          (int))))))
+
+====================
+Invalid Array Slices
+====================
+
+nums[::];  
+nums[0::2];  
+nums[1, 2:3];  
+nums[:end, 2];  
+nums[1:3:];  
+nums[:3:2]; 
+
+---
+
+(source_file
+  (array_access
+    (identifier)
+    (ERROR))
+  (array_access
+    (identifier)
+    (int)
+    (ERROR)
+    (int))
+  (array_access
+    (identifier)
+    (ERROR
+      (int))
+    (int)
+    (int))
+  (array_access
+    (identifier)
+    (identifier)
+    (ERROR
+      (int)))
+  (array_access
+    (identifier)
+    (int)
+    (int)
+    (ERROR))
+  (array_access
+    (identifier)
+    (ERROR
+      (int))
+    (int)))
+
+====================
+Slicing Non-Arrays
+====================
+
+var x = 42[:];  
+var str = "hello"[1:3];  
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (int))
+  (ERROR)
+  (assignment
+    (identifier)
+    (ERROR
+      (string))
+    (array
+      (int)
+      (ERROR
+        (int)))))
+
+============================
+Invalid Nested Array Slicing
+============================
+
+matrix[:][:, 2];  
+nums[1:3][0, 2:5];
+
+---
+
+(source_file
+  (array_access
+    (array_access
+      (identifier))
+    (ERROR)
+    (int))
+  (array_access
+    (array_access
+      (identifier)
+      (int)
+      (int))
+    (ERROR
+      (int))
+    (int)
+    (int)))
