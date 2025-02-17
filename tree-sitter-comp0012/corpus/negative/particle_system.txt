@@ -1,0 +1,113 @@
+===============================================
+Missing Required Fields in Particle Declaration
+===============================================
+
+particle p = new particle(x: 100, y: 200, vx: 2, vy: -3);
+
+---
+
+(ERROR
+    (identifier)
+    (int)
+    (int)
+    (int)
+    (unary_expression
+    (unary_operator)
+    (int)))
+
+==================================
+Missing Values for Particle Fields
+==================================
+
+particle p = new particle(x: , y: 200, vx: 2, vy: -3, lifespan: 255);
+particle p = new particle(x: 100, y: , vx: 2, vy: -3, lifespan: 255);
+
+---
+
+(source_file
+    (particle_declaration
+    (identifier)
+    (MISSING identifier)
+    (int)
+    (int)
+    (unary_expression
+        (unary_operator)
+        (int))
+    (int))
+    (particle_declaration
+    (identifier)
+    (int)
+    (MISSING identifier)
+    (int)
+    (unary_expression
+        (unary_operator)
+        (int))
+    (int)))
+
+============================================
+Incorrect Use of Particle System Declaration
+============================================
+
+system particles = new system(max_particles);
+
+---
+
+(source_file
+      (particle_system
+        (identifier)
+        (ERROR
+          (identifier))))
+
+========================================
+Incorrect Method Call on Particle System
+========================================
+
+particles.add(particle(x: 100, y: 200, vx: 2, vy: -3, lifespan: 255));
+
+---
+
+(source_file
+      (method_call
+        (identifier)
+        (identifier)
+        (argument_list
+          (function_call
+            (identifier)
+            (argument_list
+              (ERROR
+                (identifier)
+                (int)
+                (identifier)
+                (int)
+                (identifier)
+                (int)
+                (identifier)
+                (unary_expression
+                  (unary_operator)
+                  (int))
+                (identifier))
+              (int))))))
+
+=================================
+Invalid Separators Between Fields
+=================================
+
+particle p = new particle(x: 100; y: 200; vx: 2; vy: -3; lifespan: 255);
+
+---
+
+(source_file
+      (ERROR
+        (identifier)
+        (ERROR
+          (int)
+          (identifier)
+          (int)
+          (identifier)
+          (int)
+          (identifier)
+          (unary_expression
+            (unary_operator)
+            (int))
+          (identifier))
+        (int)))

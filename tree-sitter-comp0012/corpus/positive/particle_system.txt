@@ -1,0 +1,330 @@
+====================
+Particle Declaration
+====================
+
+particle p = new particle(x: 100, y: 200, vx: 2, vy: -3, lifespan: 255);
+
+---
+
+(source_file
+    (particle_declaration
+    (identifier)
+    (int)
+    (int)
+    (int)
+    (unary_expression
+        (unary_operator)
+        (int))
+    (int)))
+
+===========================
+Particle System Declaration
+===========================
+
+system particles = new system();
+system limitedParticles = new system(max_particles: 100);
+
+---
+
+(source_file
+    (particle_system
+    (identifier))
+    (particle_system
+    (identifier)
+    (int)))
+
+============================
+Adding Particles to a System
+============================
+
+particles.add(new particle(x: random(0, 400), y: 100, vx: 0, vy: 2, lifespan: 255));
+
+---
+
+(source_file
+      (method_call
+        (identifier)
+        (identifier)
+        (argument_list
+          (particle_expression
+            (function_call
+              (identifier)
+              (argument_list
+                (int)
+                (int)))
+            (int)
+            (int)
+            (int)
+            (int)))))
+
+==================================
+Particle System with Multiple Particles
+==================================
+
+system particleSystem = new system();
+particle p1 = new particle(x: 50, y: 100, vx: 1, vy: -2, lifespan: 255);
+particle p2 = new particle(x: 200, y: 50, vx: 0, vy: 3, lifespan: 150);
+
+particleSystem.add(p1);
+particleSystem.add(p2);
+
+---
+
+(source_file
+      (particle_system
+        (identifier))
+      (particle_declaration
+        (identifier)
+        (int)
+        (int)
+        (int)
+        (unary_expression
+          (unary_operator)
+          (int))
+        (int))
+      (particle_declaration
+        (identifier)
+        (int)
+        (int)
+        (int)
+        (int)
+        (int))
+      (method_call
+        (identifier)
+        (identifier)
+        (argument_list
+          (identifier)))
+      (method_call
+        (identifier)
+        (identifier)
+        (argument_list
+          (identifier))))
+
+=============================
+Looping Through Particles in a System
+=============================
+
+for (var i = 0; i < particleSystem.count(); i = i + 1) {
+    particleSystem.get(i).update();
+}
+
+---
+
+(source_file
+    (for_statement
+    (assignment
+        (identifier)
+        (int))
+    (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (method_call
+        (identifier)
+        (identifier)
+        (argument_list)))
+    (reassignment
+        (identifier)
+        (binary_expression
+        (identifier)
+        (arithmetic_operator)
+        (int)))
+    (block
+        (method_call
+        (method_call
+            (identifier)
+            (identifier)
+            (argument_list
+            (identifier)))
+        (identifier)
+        (argument_list)))))
+
+===============================
+Updating All Particles in System
+===============================
+
+for (var i = 0; i < particles.count(); i = i + 1) {
+    particles.get(i).update();
+}
+
+---
+
+(source_file
+    (for_statement
+    (assignment
+        (identifier)
+        (int))
+    (comparison_expression
+        (identifier)
+        (comparison_operator)
+        (method_call
+        (identifier)
+        (identifier)
+        (argument_list)))
+    (reassignment
+        (identifier)
+        (binary_expression
+        (identifier)
+        (arithmetic_operator)
+        (int)))
+    (block
+        (method_call
+        (method_call
+            (identifier)
+            (identifier)
+            (argument_list
+            (identifier)))
+        (identifier)
+        (argument_list)))))
+
+=======================
+Nested Particle Systems
+=======================
+
+system outerParticles = new system();
+system innerParticles = new system();
+outerParticles.add(innerParticles);
+
+---
+
+(source_file
+    (particle_system
+        (identifier))
+    (particle_system
+        (identifier))
+    (method_call
+        (identifier)
+        (identifier)
+        (argument_list
+            (identifier))))
+
+======================================
+Particle System with Random Initial Values
+======================================
+
+system particles = new system();
+particles.add(new particle(x: random(0, 400), y: random(0, 400), vx: random(-1, 1), vy: random(-2, 2), lifespan: random(100, 255)));
+
+---
+
+(source_file
+    (particle_system
+    (identifier))
+    (method_call
+    (identifier)
+    (identifier)
+    (argument_list
+        (particle_expression
+        (function_call
+            (identifier)
+            (argument_list
+            (int)
+            (int)))
+        (function_call
+            (identifier)
+            (argument_list
+            (int)
+            (int)))
+        (function_call
+            (identifier)
+            (argument_list
+            (unary_expression
+                (unary_operator)
+                (int))
+            (int)))
+        (function_call
+            (identifier)
+            (argument_list
+            (unary_expression
+                (unary_operator)
+                (int))
+            (int)))
+        (function_call
+            (identifier)
+            (argument_list
+            (int)
+            (int)))))))
+
+===========================
+Changing Particle Properties
+===========================
+
+particle p = new particle(x: 100, y: 200, vx: 2, vy: -3, lifespan: 255);
+p.vx = 5;
+p.vy = -1;
+p.lifespan = 200;
+
+---
+
+(source_file
+    (particle_declaration
+        (identifier)
+        (int)
+        (int)
+        (int)
+        (unary_expression
+            (unary_operator)
+            (int))
+        (int))
+    (reassignment
+        (property_access
+            (identifier)
+            (identifier))
+        (int))
+    (reassignment
+        (property_access
+            (identifier)
+            (identifier))
+        (unary_expression
+            (unary_operator)
+            (int)))
+    (reassignment
+        (property_access
+            (identifier)
+            (identifier))
+        (int)))
+
+=====================
+Resetting Particles
+=====================
+
+for (var i = 0; i < particles.count(); i = i + 1) {
+    particles.get(i).reset();
+}
+
+---
+
+(source_file
+    (for_statement
+        (assignment
+            (identifier)
+            (int))
+        (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (method_call
+                (identifier)
+                (identifier)
+                (argument_list)))
+        (reassignment
+            (identifier)
+            (binary_expression
+                (identifier)
+                (arithmetic_operator)
+                (int)))
+        (block
+            (method_call
+                (method_call
+                    (identifier)
+                    (identifier)
+                    (argument_list
+                        (identifier)))
+                (identifier)
+                (argument_list)))))
+
+
+
+
+    
+
+    
+

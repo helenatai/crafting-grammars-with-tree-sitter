@@ -35,12 +35,12 @@ module.exports = grammar({
 			
 
 		method_call: ($) =>
-			seq(
-				field("receiver", $.identifier),
+			prec.left(4, seq(
+				field("receiver", choice($.identifier, $.property_access, $.method_call)),
 				".",
 				field("name", $.identifier),
-				$.argument_list,
-			),
+				$.argument_list
+			)),
 		
 		function_declaration: ($) =>
 			seq(
@@ -71,11 +71,11 @@ module.exports = grammar({
 			seq("return", optional($._expression), ";"),
 
 		property_access: ($) =>
-			seq(
-				field("object", $.identifier),
+			prec.left(3, seq(
+				field("object", choice($.identifier, $.property_access, $.method_call)),
 				".",
 				field("property", $.identifier)
-			),
+			)),
 		
 		_expression: ($) =>
 			choice(
@@ -89,7 +89,8 @@ module.exports = grammar({
 				$.binary_expression,
 				$.array_access,
 				$.property_access,
-				$.parenthesized_expression 
+				$.parenthesized_expression,
+				$.particle_expression
 			),
 		
 		unary_operator: ($) =>
@@ -195,6 +196,47 @@ module.exports = grammar({
 				"]"
 			),
 		
+		particle_declaration: ($) =>
+			seq(
+				"particle",
+				field("name", $.identifier),
+				"=",
+				"new",
+				"particle",
+				"(",
+				"x:", $._expression, ",",
+				"y:", $._expression, ",",
+				"vx:", $._expression, ",",
+				"vy:", $._expression, ",",
+				"lifespan:", $._expression,
+				")"
+			),
+		
+		particle_expression: ($) =>
+			seq(
+				"new",
+				"particle",
+				"(",
+				"x:", field("x", $._expression), ",",
+				"y:", field("y", $._expression), ",",
+				"vx:", field("vx", $._expression), ",",
+				"vy:", field("vy", $._expression), ",",
+				"lifespan:", field("lifespan", $._expression),
+				")"
+			),  
+		
+		particle_system: ($) =>
+			seq(
+				"system",
+				field("name", $.identifier),
+				"=",
+				"new",
+				"system",
+				"(",
+				optional(seq("max_particles:", $._expression)),  // Allows limiting max particles
+				")"
+			),
+			
 		if_statement: ($) =>
 			seq(
 				"if",
@@ -251,6 +293,7 @@ module.exports = grammar({
 						$.unary_expression,
 						$.array, 
 						$.property_access,
+						$.method_call,
 						$.function_call  
 					)
 				)	
@@ -263,11 +306,11 @@ module.exports = grammar({
 			seq("var", field("name", $.identifier), "=", field("value", $._expression)),
 
 		reassignment: ($) =>
-			seq(
-			  field("name", $.identifier),
+			prec.left(1,seq(
+			  field("name", choice($.identifier, $.property_access)),
 			  "=",
 			  field("value", $._expression)
-			),
+			)),
 
 		_statement: ($) =>
 			choice(
@@ -282,6 +325,8 @@ module.exports = grammar({
 				seq($.while_statement),
 				seq($.for_statement),
 				seq($.function_declaration),
+				seq($.particle_declaration, ";"),
+				seq($.particle_system,";")
 			),
 
 		_newline: (_$) => /\s*\n/,

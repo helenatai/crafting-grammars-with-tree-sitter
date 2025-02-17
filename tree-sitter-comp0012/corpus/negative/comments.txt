@@ -17,22 +17,21 @@ Single line comments
 Block comments Open
 ====================
 
-#Wren Language*#
+#Comment*#
 
 ---
 (source_file
-  (ERROR 
-      (UNEXPECTED 'W')
-      (identifier)
-      (identifier)
-      (arithmetic_operator)
-      (UNEXPECTED '\n')))
+(ERROR
+   (UNEXPECTED 'C')
+   (identifier)
+   (arithmetic_operator)
+   (UNEXPECTED '\n')))
 
 ====================
 Block comments Close
 ====================
 
-#* Wren language
+#* Comment
 #
 
 ---

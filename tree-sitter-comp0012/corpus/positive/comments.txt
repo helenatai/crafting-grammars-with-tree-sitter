@@ -2,9 +2,9 @@
 Single line comments
 ====================
 
-## Wren language
-##Wren language
-##    Wren language
+## Comment
+##Comment
+##    Comment
 
 ---
 
@@ -17,24 +17,24 @@ Single line comments
 Block comments
 ====================
 
-#*Wren Language*#
+#*Comment*#
 
-#* Wren language *#
+#* Comment *#
 
-#* Wren Language
+#* Comment
    *#
 
 #* 
-   Wren Language *#
+   Comment *#
 
 #* 
-   Wren Language 
+   Comment 
  *#
 
 #* 
   
 
-   Wren Language 
+   Comment 
 
 
  *#
